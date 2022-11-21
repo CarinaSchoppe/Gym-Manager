@@ -31,5 +31,6 @@ object Utility {
 
     fun init() {
         database = Database()
+        database.createDatabase()
     }
 }

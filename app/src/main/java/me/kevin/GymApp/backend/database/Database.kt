@@ -2,6 +2,7 @@ package me.kevin.GymApp.backend.database
 
 import android.database.sqlite.SQLiteCursor
 import android.database.sqlite.SQLiteDatabase
+import android.util.Log
 import java.io.File
 
 class Database {
@@ -10,7 +11,7 @@ class Database {
     lateinit var cursor: SQLiteCursor
     fun createDatabase() {
         //create databasefile
-        database = SQLiteDatabase.openOrCreateDatabase(File("database.db"), null);
+        database = SQLiteDatabase.openOrCreateDatabase(File("database.db"), null)
         //create tables
 
         var tables = listOf<String>(
@@ -64,6 +65,11 @@ class Database {
                 );
             """.trimIndent()
         )
+
+        for (table in tables) {
+            database.execSQL(table)
+            Log.d("SQL", "created table")
+        }
     }
 
 
