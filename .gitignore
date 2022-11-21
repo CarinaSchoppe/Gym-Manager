@@ -16,7 +16,7 @@ local.properties
 ### Java template
 # Compiled class file
 *.class
-idea
+.idea
 *.iml
 # Log file
 *.log
