@@ -1,13 +1,11 @@
 package me.kevin.GymApp.ui
 
+import android.content.Intent
 import android.os.Bundle
-import android.renderscript.RenderScript.Priority
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -30,84 +28,97 @@ import me.kevin.GymApp.ui.theme.GymAppTheme
 class LoginActivity : ComponentActivity() {
 
     init {
-        Utility.init()
+        Utility.init(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             GymAppTheme {
-                println("jsioerwjpüosejf")
-                // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+                Surface(modifier = Modifier.fillMaxWidth(), color = MaterialTheme.colorScheme.background) {
+                    // A surface container using the 'background' color from the theme
                     Login()
                 }
             }
         }
-    }
-}
-
-
-@Composable
-fun Login(modifier: Modifier = Modifier) {
-    Column {
-        val username = remember { mutableStateOf(TextFieldValue()) }
-        Username(username)
-        val password = remember { mutableStateOf(TextFieldValue()) }
-        Password(password)
-        LoginButton(username, password)
-    }
-}
-
-@Composable
-fun Username(username: MutableState<TextFieldValue>) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        TextField(
-            value = username.value,
-            onValueChange = { username.value = it },
-            placeholder = {
-                Text("username")
-                //place text centered
-            },
-        )
-    }
-
-}
-
-@Composable
-fun Password(password: MutableState<TextFieldValue>) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 10.dp)
-    ) {
-        TextField(
-            value = password.value,
-            onValueChange = { password.value = it },
-            visualTransformation = PasswordVisualTransformation(),
-            placeholder = { Text("password") }
-        )
-    }
-}
-
-@Composable
-fun LoginButton(username: MutableState<TextFieldValue>, password: MutableState<TextFieldValue>) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Bottom,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 20.dp)
-    ) {
-        Button(onClick = {
-            Utility.userLogin(username = username.value.text, password = password.value.text) }) {}
-            
 
     }
-}
 
+
+    @Composable
+    fun Login(modifier: Modifier = Modifier) {
+        Column {
+            val username = remember { mutableStateOf(TextFieldValue()) }
+            Username(username)
+            val password = remember { mutableStateOf(TextFieldValue()) }
+            Password(password)
+            LoginButton(username, password)
+            RegisterButton()
+        }
+    }
+
+    @Composable
+    fun Username(username: MutableState<TextFieldValue>) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp)
+        ) {
+            TextField(
+                value = username.value,
+                onValueChange = { username.value = it },
+                placeholder = {
+                    Text("username")
+                    //place text centered
+                },
+            )
+        }
+
+    }
+
+    @Composable
+    fun Password(password: MutableState<TextFieldValue>) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 15.dp)
+        ) {
+            TextField(
+                value = password.value,
+                onValueChange = { password.value = it },
+                visualTransformation = PasswordVisualTransformation(),
+                placeholder = { Text("password") }
+            )
+        }
+    }
+
+    @Composable
+    fun RegisterButton() {
+        Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
+            Button(onClick = { startActivity(Intent(this@LoginActivity, RegisterActivity::class.java)) }) {
+                Text("Register")
+            }
+        }
+    }
+
+    @Composable
+    fun LoginButton(username: MutableState<TextFieldValue>, password: MutableState<TextFieldValue>) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Bottom,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 5.dp, top = 15.dp)
+        ) {
+            Button(onClick = {
+                Utility.userLogin(username = username.value.text, password = password.value.text)
+            }) { Text(text = "Login") }
+
+
+        }
+    }
+
+}
 

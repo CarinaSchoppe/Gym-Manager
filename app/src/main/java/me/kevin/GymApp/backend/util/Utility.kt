@@ -1,5 +1,6 @@
 package me.kevin.GymApp.backend.util
 
+import android.content.Context
 import me.kevin.GymApp.backend.database.Database
 
 object Utility {
@@ -29,8 +30,50 @@ object Utility {
 
     lateinit var database: Database
 
-    fun init() {
-        database = Database()
-        database.createDatabase()
+    fun init(context: Context) {
+
+        database = Database(context)
+
+    }
+
+
+    fun register(username: String, password: String, email: String, firstname: String, lastname: String) {
+        var username = username
+        var password = password
+        var email = email
+        var firstname = firstname
+        var lastname = lastname
+
+        username = username.replace("'", "")
+        username = username.replace("\"", "")
+        username = username.replace(";", "")
+        username = username.replace("=", "")
+        username = username.replace(" ", "")
+
+        password = password.replace("'", "")
+        password = password.replace("\"", "")
+        password = password.replace(";", "")
+        password = password.replace("=", "")
+        password = password.replace(" ", "")
+
+        email = email.replace("'", "")
+        email = email.replace("\"", "")
+        email = email.replace(";", "")
+        email = email.replace("=", "")
+        email = email.replace(" ", "")
+
+        firstname = firstname.replace("'", "")
+        firstname = firstname.replace("\"", "")
+        firstname = firstname.replace(";", "")
+        firstname = firstname.replace("=", "")
+        firstname = firstname.replace(" ", "")
+
+        lastname = lastname.replace("'", "")
+        lastname = lastname.replace("\"", "")
+        lastname = lastname.replace(";", "")
+        lastname = lastname.replace("=", "")
+        lastname = lastname.replace(" ", "")
+
+        //TODO: database.register(username, password, email, firstname, lastname)
     }
 }

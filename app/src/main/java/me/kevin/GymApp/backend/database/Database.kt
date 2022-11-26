@@ -1,22 +1,16 @@
 package me.kevin.GymApp.backend.database
 
-import android.database.sqlite.SQLiteCursor
+import android.content.Context
 import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
-import java.io.File
 
-class Database {
+class Database(val context: Context) : SQLiteOpenHelper(context, "GymApp.db", null, 1) {
 
-    lateinit var database: SQLiteDatabase
-    lateinit var cursor: SQLiteCursor
-    fun createDatabase() {
-        //create databasefile
-        database = SQLiteDatabase.openOrCreateDatabase(File("database.db"), null)
-        //create tables
-
+    override fun onCreate(database: SQLiteDatabase?) {
         var tables = listOf<String>(
             """
-                CREATE TABLE Users ('ID'	INTEGER NOT NULL UNIQUE,
+                CREATE TABLE IF NOT EXITS Users ('ID'	INTEGER NOT NULL UNIQUE,
                 'Firstname'	TEXT NOT NULL,
                 'Lastname'	INTEGER NOT NULL,
                 'Username'	TEXT NOT NULL UNIQUE,
@@ -27,7 +21,7 @@ class Database {
             );""".trimIndent(),
 
             """
-        CREATE TABLE "Fitnessstudio" (
+        CREATE TABLE IF NOT EXITS"Fitnessstudio" (
 	"ID"	INTEGER NOT NULL UNIQUE,
 	"Name"	TEXT NOT NULL,
 	"Location"	TEXT NOT NULL,
@@ -36,7 +30,7 @@ class Database {
 	PRIMARY KEY("ID" AUTOINCREMENT)
 );""".trimIndent(),
             """
-                CREATE TABLE "Trainingsplan" (
+                CREATE TABLE IF NOT EXITS"Trainingsplan" (
                 "ID"	INTEGER NOT NULL UNIQUE,
                 "Name"	TEXT NOT NULL,
                 "Beschreibung"	TEXT NOT NULL,
@@ -49,14 +43,14 @@ class Database {
                 PRIMARY KEY("ID" AUTOINCREMENT)
     );""".trimIndent(),
             """
-    CREATE TABLE "Muskelgruppe" (
+    CREATE TABLE IF NOT EXITS "Muskelgruppe" (
 	"ID"	INTEGER NOT NULL UNIQUE,
 	"Name"	TEXT NOT NULL,
 	FOREIGN KEY("ID") REFERENCES "Trainingsplan"("ID"),
 	PRIMARY KEY("ID" AUTOINCREMENT)
 );""".trimIndent(),
             """
-                CREATE TABLE "UserFavorites" (
+                CREATE TABLE IF NOT EXITS  "UserFavorites" (
                 	"UserID"	INTEGER NOT NULL,
                 	"TrainingsplanID"	INTEGER NOT NULL,
                 	FOREIGN KEY("UserID") REFERENCES "Users"("ID"),
@@ -67,9 +61,18 @@ class Database {
         )
 
         for (table in tables) {
-            database.execSQL(table)
+            database?.execSQL(table)
             Log.d("SQL", "created table")
         }
+    }
+
+    override fun onUpgrade(database: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+        database?.execSQL("DROP TABLE IF EXISTS Users")
+        database?.execSQL("DROP TABLE IF EXISTS Fitnessstudio")
+        database?.execSQL("DROP TABLE IF EXISTS Trainingsplan")
+        database?.execSQL("DROP TABLE IF EXISTS Muskelgruppe")
+        database?.execSQL("DROP TABLE IF EXISTS UserFavorites")
+        onCreate(database)
     }
 
 
