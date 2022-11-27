@@ -10,7 +10,7 @@ class Database(val context: Context) : SQLiteOpenHelper(context, "GymApp.db", nu
     override fun onCreate(database: SQLiteDatabase?) {
         var tables = listOf<String>(
             """
-                CREATE TABLE IF NOT EXITS Users ('ID'	INTEGER NOT NULL UNIQUE,
+                CREATE TABLE Users ('ID'	INTEGER NOT NULL UNIQUE,
                 'Firstname'	TEXT NOT NULL,
                 'Lastname'	INTEGER NOT NULL,
                 'Username'	TEXT NOT NULL UNIQUE,
@@ -21,7 +21,7 @@ class Database(val context: Context) : SQLiteOpenHelper(context, "GymApp.db", nu
             );""".trimIndent(),
 
             """
-        CREATE TABLE IF NOT EXITS"Fitnessstudio" (
+        CREATE TABLE Fitnessstudio (
 	"ID"	INTEGER NOT NULL UNIQUE,
 	"Name"	TEXT NOT NULL,
 	"Location"	TEXT NOT NULL,
@@ -30,7 +30,7 @@ class Database(val context: Context) : SQLiteOpenHelper(context, "GymApp.db", nu
 	PRIMARY KEY("ID" AUTOINCREMENT)
 );""".trimIndent(),
             """
-                CREATE TABLE IF NOT EXITS"Trainingsplan" (
+                CREATE TABLE  Trainingsplan (
                 "ID"	INTEGER NOT NULL UNIQUE,
                 "Name"	TEXT NOT NULL,
                 "Beschreibung"	TEXT NOT NULL,
@@ -43,14 +43,14 @@ class Database(val context: Context) : SQLiteOpenHelper(context, "GymApp.db", nu
                 PRIMARY KEY("ID" AUTOINCREMENT)
     );""".trimIndent(),
             """
-    CREATE TABLE IF NOT EXITS "Muskelgruppe" (
+    CREATE TABLE  Muskelgruppe (
 	"ID"	INTEGER NOT NULL UNIQUE,
 	"Name"	TEXT NOT NULL,
 	FOREIGN KEY("ID") REFERENCES "Trainingsplan"("ID"),
 	PRIMARY KEY("ID" AUTOINCREMENT)
 );""".trimIndent(),
             """
-                CREATE TABLE IF NOT EXITS  "UserFavorites" (
+                CREATE TABLE  UserFavorites (
                 	"UserID"	INTEGER NOT NULL,
                 	"TrainingsplanID"	INTEGER NOT NULL,
                 	FOREIGN KEY("UserID") REFERENCES "Users"("ID"),
@@ -73,6 +73,25 @@ class Database(val context: Context) : SQLiteOpenHelper(context, "GymApp.db", nu
         database?.execSQL("DROP TABLE IF EXISTS Muskelgruppe")
         database?.execSQL("DROP TABLE IF EXISTS UserFavorites")
         onCreate(database)
+    }
+
+    fun userExists(username: String): Boolean {
+        val database = this.readableDatabase
+        val cursor = database.rawQuery("SELECT * FROM Users WHERE Username = '$username'", null)
+        return cursor.count > 0
+    }
+
+    fun emailExists(email: String): Boolean {
+        val database = this.readableDatabase
+        val cursor = database.rawQuery("SELECT * FROM Users WHERE Email = '$email'", null)
+        return cursor.count > 0
+    }
+
+    fun registerUser(username: String, password: String, email: String, firstname: String, lastname: String) {
+        val database = this.writableDatabase
+        database.execSQL("INSERT INTO Users (Username, Password, Email, Firstname, Lastname) VALUES ('$username', '$password', '$email', '$firstname', '$lastname')")
+
+        Log.d("SQL", "User registered")
     }
 
 

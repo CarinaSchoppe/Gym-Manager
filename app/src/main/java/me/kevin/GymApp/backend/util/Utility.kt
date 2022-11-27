@@ -2,10 +2,12 @@ package me.kevin.GymApp.backend.util
 
 import android.content.Context
 import me.kevin.GymApp.backend.database.Database
+import me.kevin.GymApp.backend.objects.Trainingsmap
+import me.kevin.GymApp.backend.objects.User
 
 object Utility {
 
-    fun userLogin(username: String, password: String){
+    fun userLogin(username: String, password: String) {
         var username = username
         var password = password
         //clean username and password from sql injection
@@ -36,8 +38,10 @@ object Utility {
 
     }
 
+    val userFavorites = mutableMapOf<User, Trainingsmap>()
 
-    fun register(username: String, password: String, email: String, firstname: String, lastname: String) {
+
+    fun register(username: String, password: String, email: String, firstname: String, lastname: String): Boolean {
         var username = username
         var password = password
         var email = email
@@ -74,6 +78,30 @@ object Utility {
         lastname = lastname.replace("=", "")
         lastname = lastname.replace(" ", "")
 
-        //TODO: database.register(username, password, email, firstname, lastname)
+
+        if (username == "" || password == "" || email == "" || firstname == "" || lastname == "") {
+            return false
+        }
+
+        //check if email is a valid email
+        if (!email.contains("@") || !email.contains(".")) {
+            return false
+        }
+
+        //check if username is already taken
+        if (database.userExists(username)) {
+            return false
+        }
+
+        //check if email is already taken
+        if (database.emailExists(email)) {
+            return false
+        }
+
+        //register user
+        database.registerUser(username, Cypher.encryptPassword(password, username), email, firstname, lastname)
+
+        return true
     }
+
 }
