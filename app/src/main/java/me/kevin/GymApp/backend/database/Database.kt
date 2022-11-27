@@ -8,7 +8,7 @@ import android.util.Log
 class Database(val context: Context) : SQLiteOpenHelper(context, "GymApp.db", null, 1) {
 
     override fun onCreate(database: SQLiteDatabase?) {
-        var tables = listOf<String>(
+        val tables = listOf<String>(
             """
                 CREATE TABLE Users ('ID'	INTEGER NOT NULL UNIQUE,
                 'Firstname'	TEXT NOT NULL,
@@ -78,6 +78,7 @@ class Database(val context: Context) : SQLiteOpenHelper(context, "GymApp.db", nu
     fun userExists(username: String): Boolean {
         val database = this.readableDatabase
         val cursor = database.rawQuery("SELECT * FROM Users WHERE Username = '$username'", null)
+
         return cursor.count > 0
     }
 
@@ -94,5 +95,36 @@ class Database(val context: Context) : SQLiteOpenHelper(context, "GymApp.db", nu
         Log.d("SQL", "User registered")
     }
 
+    fun getPassword(username: String): String {
+        val database = this.readableDatabase
+        val cursor = database.rawQuery("SELECT Password FROM Users WHERE Username = '$username'", null)
+        return cursor.getString(0)
+    }
+
+    fun getUserID(username: String): Int {
+        val database = this.readableDatabase
+        val cursor = database.rawQuery("SELECT ID FROM Users WHERE Username = '$username'", null)
+        return cursor.getInt(0)
+    }
+
+    fun getEmail(username: String): String {
+        val database = this.readableDatabase
+        val cursor = database.rawQuery("SELECT Email FROM Users WHERE Username = '$username'", null)
+        return cursor.getString(0)
+    }
+
+    fun getFirstname(username: String): String {
+        val database = this.readableDatabase
+        val cursor = database.rawQuery("SELECT Firstname FROM Users WHERE Username = '$username'", null)
+        return cursor.getString(0)
+    }
+
+    fun getLastname(username: String): String {
+        val database = this.readableDatabase
+        val cursor = database.rawQuery("SELECT Lastname FROM Users WHERE Username = '$username'", null)
+        return cursor.getString(0)
+    }
 
 }
+
+

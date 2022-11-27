@@ -7,7 +7,7 @@ import me.kevin.GymApp.backend.objects.User
 
 object Utility {
 
-    fun userLogin(username: String, password: String) {
+    fun userLogin(username: String, password: String): Boolean {
         var username = username
         var password = password
         //clean username and password from sql injection
@@ -28,14 +28,28 @@ object Utility {
         password = password.replace(" ", "")
 
 
+        //check if user exists
+        if (!database.userExists(username)) {
+            return false
+        }
+        //check if password is correct
+        if (!Cypher.checkPassword(username, password, database.getPassword(username))) {
+            return false
+
+        }
+
+        currentUser = User(database.getUserID(username), username, password, database.getEmail(username), database.getFirstname(username), database.getLastname(username))
+        return true
+
     }
+
+
+    var currentUser: User? = null
 
     lateinit var database: Database
 
     fun init(context: Context) {
-
         database = Database(context)
-
     }
 
     val userFavorites = mutableMapOf<User, Trainingsmap>()
@@ -103,5 +117,4 @@ object Utility {
 
         return true
     }
-
 }
