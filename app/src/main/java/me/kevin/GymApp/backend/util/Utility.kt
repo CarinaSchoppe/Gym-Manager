@@ -1,6 +1,18 @@
 package me.kevin.GymApp.backend.util
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import androidx.activity.ComponentActivity
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import me.kevin.GymApp.backend.database.Database
 import me.kevin.GymApp.backend.objects.Trainingsmap
 import me.kevin.GymApp.backend.objects.User
@@ -116,5 +128,27 @@ object Utility {
         database.registerUser(username, Cypher.encryptPassword(password, username), email, firstname, lastname)
 
         return true
+    }
+
+
+    @Composable
+    fun backButton(activity: Activity, clazz: Class<out ComponentActivity>) {
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 20.dp)
+        ) {
+
+            Button(onClick = {
+                //start old activity
+                activity.startActivity(Intent(activity, clazz))
+            }) {
+                Text(text = "Back")
+            }
+
+        }
+
+
     }
 }

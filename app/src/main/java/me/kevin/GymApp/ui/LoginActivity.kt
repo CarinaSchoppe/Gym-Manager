@@ -114,14 +114,15 @@ class LoginActivity : ComponentActivity() {
         ) {
             val openDialog = remember { mutableStateOf(false) }
             Button(onClick = {
-                if (Utility.userLogin(username = username.value.text, password = password.value.text)) {
-                    openDialog.value = false
+                if (!Utility.userLogin(username = username.value.text, password = password.value.text)) {
+                    openDialog.value = true
                 }
 
             }) { Text(text = "Login") }
 
-            if (openDialog.value)
+            if (openDialog.value) {
                 Popup.generatePopup(titleText = "Wrong Login", displayText = "Username or Password is wrong", good = false, openDialog = openDialog)
+            }
         }
     }
 
