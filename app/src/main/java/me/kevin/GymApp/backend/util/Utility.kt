@@ -38,12 +38,25 @@ object Utility {
         password = password.replace(";", "")
         password = password.replace("=", "")
         password = password.replace(" ", "")
+        println("Users:")
 
-
+        for (user in database.getAllUsers()) {
+            println(user)
+        }
         //check if user exists
         if (!database.userExists(username)) {
+            println("user not found!")
+
             return false
+
         }
+
+        println("user found!")
+
+
+        //print out everything in the database table Users
+
+
         //check if password is correct
         if (!Cypher.checkPassword(username, password, database.getPassword(username))) {
             return false

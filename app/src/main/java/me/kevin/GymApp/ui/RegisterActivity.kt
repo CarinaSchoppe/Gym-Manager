@@ -1,5 +1,6 @@
 package me.kevin.GymApp.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -101,6 +102,7 @@ class RegisterActivity : ComponentActivity() {
                         openDialog.value = true
                         text.value = "Registrierung erfolgreich"
                         good.value = true
+                        startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
                     } else {
                         openDialog.value = true
                         text.value = "Registrierung fehlgeschlagen"
