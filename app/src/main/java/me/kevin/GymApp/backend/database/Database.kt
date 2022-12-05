@@ -77,8 +77,13 @@ class Database(val context: Context) : SQLiteOpenHelper(context, "GymApp.db", nu
     }
 
     fun userExists(username: String): Boolean {
+        //print all users
+        println("Users:")
+        for (user in getAllUsers()) {
+            println(user)
+        }
         val database = this.readableDatabase
-        val cursor = database.rawQuery("SELECT * FROM Users WHERE Username='$username';", null)
+        val cursor = database.rawQuery("SELECT * FROM USERS where USERNAME = 'carina'", null)
         val int = cursor.count > 0
         cursor.close()
         return int
@@ -116,6 +121,10 @@ class Database(val context: Context) : SQLiteOpenHelper(context, "GymApp.db", nu
 
     fun getUserID(username: String): Int {
         val database = this.readableDatabase
+
+        //print all users
+        //getAllUsers()
+
         val cursor = database.rawQuery("SELECT ID FROM Users WHERE Username='$username';", null)
         val int = cursor.getInt(0)
         cursor.close()
