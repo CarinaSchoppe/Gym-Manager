@@ -45,18 +45,10 @@ object Utility {
 
         //check if user exists
         if (userSet.find { it.username == username } == null) {
-            println("user not found!")
 
             return false
 
         }
-
-        println("user found!")
-
-
-        //print out everything in the database table Users
-
-
         //check if password is correct
         if (!Cypher.checkPassword(username, password, userSet.find { it.username == username }!!.password)) {
             return false
@@ -64,8 +56,8 @@ object Utility {
         }
 
         currentUser = userSet.find { it.username == username }!!
-        return true
 
+        return true
     }
 
 
@@ -123,6 +115,9 @@ object Utility {
 
         //register user
         database.registerUser(username, Cypher.encryptPassword(password, username), email, firstname, lastname)
+
+
+
 
         return true
     }

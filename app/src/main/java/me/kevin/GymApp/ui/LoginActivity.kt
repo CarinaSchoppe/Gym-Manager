@@ -33,6 +33,7 @@ class LoginActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Utility.fillValuesFromDataBase()
         setContent {
             GymAppTheme {
                 Surface(modifier = Modifier.fillMaxWidth(), color = MaterialTheme.colorScheme.background) {

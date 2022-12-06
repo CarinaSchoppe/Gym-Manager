@@ -119,7 +119,7 @@ class RegisterActivity : ComponentActivity() {
 
                 }
             }
-            Utility.backButton(activity = this@RegisterActivity, clazz = LoginActivity::class.java)
+            Utility.BackButton(activity = this@RegisterActivity, clazz = LoginActivity::class.java)
         }
     }
 
