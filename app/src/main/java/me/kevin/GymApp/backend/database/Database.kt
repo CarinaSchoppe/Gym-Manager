@@ -4,7 +4,12 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
+import me.kevin.GymApp.backend.objects.FitnessStudio
+import me.kevin.GymApp.backend.objects.Musclegroup
+import me.kevin.GymApp.backend.objects.Trainingsmap
 import me.kevin.GymApp.backend.objects.User
+import me.kevin.GymApp.backend.objects.UserFavorites
+import me.kevin.GymApp.backend.util.Utility
 
 class Database(val context: Context) : SQLiteOpenHelper(context, "GymApp.db", null, 1) {
 
@@ -76,26 +81,6 @@ class Database(val context: Context) : SQLiteOpenHelper(context, "GymApp.db", nu
         onCreate(database)
     }
 
-    fun userExists(username: String): Boolean {
-        //print all users
-        println("Users:")
-        for (user in getAllUsers()) {
-            println(user)
-        }
-        val database = this.readableDatabase
-        val cursor = database.rawQuery("SELECT * FROM USERS where USERNAME = 'carina'", null)
-        val int = cursor.count > 0
-        cursor.close()
-        return int
-    }
-
-    fun emailExists(email: String): Boolean {
-        val database = this.readableDatabase
-        val cursor = database.rawQuery("SELECT * FROM Users WHERE Email = '$email';", null)
-        val int = cursor.count > 0
-        cursor.close()
-        return int
-    }
 
     fun registerUser(username: String, password: String, email: String, firstname: String, lastname: String) {
         val database = this.writableDatabase
@@ -108,52 +93,13 @@ class Database(val context: Context) : SQLiteOpenHelper(context, "GymApp.db", nu
 
         database.execSQL("INSERT INTO Users (Firstname, Lastname, Username, Email, Password) VALUES ('$username', '$password', '$email', '$firstname', '$lastname');")
 
+        var user = User(0, username, password, email, firstname, lastname)
+        //get the highest id in the dataset
+        user.id = Utility.userSet.size
+        Utility.userSet.add(user)
         Log.d("SQL", "User registered")
     }
 
-    fun getPassword(username: String): String {
-        val database = this.readableDatabase
-        val cursor = database.rawQuery("SELECT Password FROM Users WHERE Username = '$username';", null)
-        val string = cursor.getString(0)
-        cursor.close()
-        return string
-    }
-
-    fun getUserID(username: String): Int {
-        val database = this.readableDatabase
-
-        //print all users
-        //getAllUsers()
-
-        val cursor = database.rawQuery("SELECT ID FROM Users WHERE Username='$username';", null)
-        val int = cursor.getInt(0)
-        cursor.close()
-        return int
-    }
-
-    fun getEmail(username: String): String {
-        val database = this.readableDatabase
-        val cursor = database.rawQuery("SELECT Email FROM Users WHERE Username = '$username';", null)
-        val string = cursor.getString(0)
-        cursor.close()
-        return string
-    }
-
-    fun getFirstname(username: String): String {
-        val database = this.readableDatabase
-        val cursor = database.rawQuery("SELECT Firstname FROM Users WHERE Username = '$username';", null)
-        val string = cursor.getString(0)
-        cursor.close()
-        return string
-    }
-
-    fun getLastname(username: String): String {
-        val database = this.readableDatabase
-        val cursor = database.rawQuery("SELECT Lastname FROM Users WHERE Username = '$username';", null)
-        val string = cursor.getString(0)
-        cursor.close()
-        return string
-    }
 
     fun getAllUsers(): List<User> {
         val database = this.readableDatabase
@@ -166,6 +112,59 @@ class Database(val context: Context) : SQLiteOpenHelper(context, "GymApp.db", nu
         cursor.close()
         return users
 
+    }
+
+    fun getAllFitnessStudios(): List<FitnessStudio> {
+        val database = this.readableDatabase
+        val cursor = database.rawQuery("SELECT * FROM Fitnessstudio", null)
+
+        val fitnessStudios = mutableListOf<FitnessStudio>()
+        while (cursor.moveToNext()) {
+            val fitnessStudio = FitnessStudio(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3))
+            fitnessStudios.add(fitnessStudio)
+        }
+        cursor.close()
+        return fitnessStudios
+    }
+
+    fun getAllMuscleGroups(): List<Musclegroup> {
+        val database = this.readableDatabase
+        val cursor = database.rawQuery("SELECT * FROM Muskelgruppe", null)
+
+        val muscleGroups = mutableListOf<Musclegroup>()
+        while (cursor.moveToNext()) {
+            val muscleGroup = Musclegroup(cursor.getInt(0), cursor.getString(1))
+            muscleGroups.add(muscleGroup)
+        }
+        cursor.close()
+        return muscleGroups
+    }
+
+    fun getAllUserFavorites(): List<UserFavorites> {
+        val database = this.readableDatabase
+        val cursor = database.rawQuery("SELECT * FROM UserFavorites", null)
+
+        val userFavorites = mutableListOf<UserFavorites>()
+        while (cursor.moveToNext()) {
+            val userFavorite = UserFavorites(cursor.getInt(0), cursor.getInt(1))
+            userFavorites.add(userFavorite)
+        }
+        cursor.close()
+        return userFavorites
+
+    }
+
+    fun getAllTrainingsMaps(): List<Trainingsmap> {
+        val database = this.readableDatabase
+        val cursor = database.rawQuery("SELECT * FROM Trainingsplan", null)
+
+        val trainingsMaps = mutableListOf<Trainingsmap>()
+        while (cursor.moveToNext()) {
+            val trainingsMap = Trainingsmap(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getInt(4))
+            trainingsMaps.add(trainingsMap)
+        }
+        cursor.close()
+        return trainingsMaps
     }
 
 }

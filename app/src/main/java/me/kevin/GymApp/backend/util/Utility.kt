@@ -14,8 +14,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import me.kevin.GymApp.backend.database.Database
+import me.kevin.GymApp.backend.objects.FitnessStudio
+import me.kevin.GymApp.backend.objects.Musclegroup
 import me.kevin.GymApp.backend.objects.Trainingsmap
 import me.kevin.GymApp.backend.objects.User
+import me.kevin.GymApp.backend.objects.UserFavorites
 
 object Utility {
 
@@ -38,13 +41,10 @@ object Utility {
         password = password.replace(";", "")
         password = password.replace("=", "")
         password = password.replace(" ", "")
-        println("Users:")
 
-        for (user in database.getAllUsers()) {
-            println(user)
-        }
+
         //check if user exists
-        if (!database.userExists(username)) {
+        if (userSet.find { it.username == username } == null) {
             println("user not found!")
 
             return false
@@ -58,12 +58,12 @@ object Utility {
 
 
         //check if password is correct
-        if (!Cypher.checkPassword(username, password, database.getPassword(username))) {
+        if (!Cypher.checkPassword(username, password, userSet.find { it.username == username }!!.password)) {
             return false
 
         }
 
-        currentUser = User(database.getUserID(username), username, password, database.getEmail(username), database.getFirstname(username), database.getLastname(username))
+        currentUser = userSet.find { it.username == username }!!
         return true
 
     }
@@ -76,8 +76,6 @@ object Utility {
     fun init(context: Context) {
         database = Database(context)
     }
-
-    val userFavorites = mutableMapOf<User, Trainingsmap>()
 
 
     fun register(username: String, password: String, email: String, firstname: String, lastname: String): Boolean {
@@ -122,20 +120,6 @@ object Utility {
             return false
         }
 
-        //check if email is a valid email
-        if (!email.contains("@") || !email.contains(".")) {
-            return false
-        }
-
-        //check if username is already taken
-        if (database.userExists(username)) {
-            return false
-        }
-
-        //check if email is already taken
-        if (database.emailExists(email)) {
-            return false
-        }
 
         //register user
         database.registerUser(username, Cypher.encryptPassword(password, username), email, firstname, lastname)
@@ -144,8 +128,26 @@ object Utility {
     }
 
 
+    val studioSet = mutableSetOf<FitnessStudio>()
+
+    val trainingsmapSet = mutableSetOf<Trainingsmap>()
+
+    val muscleGroupSet = mutableSetOf<Musclegroup>()
+
+    val userSet = mutableSetOf<User>()
+
+    val userFavorites = mutableSetOf<UserFavorites>()
+
+    fun fillValuesFromDataBase() {
+        userSet.addAll(database.getAllUsers())
+        studioSet.addAll(database.getAllFitnessStudios())
+        trainingsmapSet.addAll(database.getAllTrainingsMaps())
+        muscleGroupSet.addAll(database.getAllMuscleGroups())
+        userFavorites.addAll(database.getAllUserFavorites())
+    }
+
     @Composable
-    fun backButton(activity: Activity, clazz: Class<out ComponentActivity>) {
+    fun BackButton(activity: Activity, clazz: Class<out ComponentActivity>) {
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
