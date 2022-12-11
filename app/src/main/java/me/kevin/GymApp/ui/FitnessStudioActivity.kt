@@ -42,14 +42,20 @@ class FitnessStudioActivity : ComponentActivity() {
         val studioName = remember { mutableStateOf(TextFieldValue()) }
         val studioDescription = remember { mutableStateOf(TextFieldValue()) }
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Top, modifier = Modifier
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Bottom,
+            modifier = Modifier
                 .fillMaxWidth()
+                .padding(bottom = 5.dp, top = 15.dp)
         ) {
             Text(text = "Fitnessstudio Erstellen")
         }
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Top, modifier = Modifier
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Bottom,
+            modifier = Modifier
                 .fillMaxWidth()
+                .padding(bottom = 5.dp, top = 15.dp)
         ) {
             Button(onClick = { }) {
                 Text(text = "Fitnessstudio Erstellen")
@@ -58,13 +64,6 @@ class FitnessStudioActivity : ComponentActivity() {
         }
 
 
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Top, modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 10.dp)
-        ) {
-            Text(text = "Fitnessstudio Erstellen")
-        }
 
 
         Utility.BackButton(activity = this@FitnessStudioActivity, clazz = FitnessActivities::class.java)
