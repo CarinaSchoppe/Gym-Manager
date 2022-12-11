@@ -70,7 +70,10 @@ object Utility {
     }
 
 
-    fun register(username: String, password: String, email: String, firstname: String, lastname: String): Boolean {
+    fun registerFitnessStudio(studioName: String, studioDescription: String) {
+    }
+
+    fun registerUser(username: String, password: String, email: String, firstname: String, lastname: String): Boolean {
         var username = username
         var password = password
         var email = email

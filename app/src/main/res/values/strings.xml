@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">GymApp</string>
     <string name="title_activity_register">Register</string>
+    <string name="title_activity_fitness_studio">FitnessStudioActivity</string>
+    <string name="title_activity_muscle_group">MuscleGroupActivity</string>
+    <string name="title_activity_fitness_activities">FitnessActivities</string>
 </resources>

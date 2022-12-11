@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.Color
 object Popup {
 
     @Composable
-    fun generatePopup(titleText: String, displayText: String, good: Boolean, openDialog: MutableState<Boolean>) {
+    fun GeneratePopup(titleText: String, displayText: String, good: Boolean, openDialog: MutableState<Boolean>) {
         val dialog = remember { mutableStateOf(true) }
         if (dialog.value) {
             AlertDialog(title = { Text(text = titleText, color = good.let { if (it) return@let Color.Green else return@let Color.Red }) }, onDismissRequest = { dialog.value = false;openDialog.value = false }, text = { Text(text = displayText, color = good.let { if (it) return@let Color.Green else return@let Color.Red }) },

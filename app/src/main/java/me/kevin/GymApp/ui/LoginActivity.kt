@@ -47,7 +47,7 @@ class LoginActivity : ComponentActivity() {
 
 
     @Composable
-    fun Login(modifier: Modifier = Modifier) {
+    private fun Login(modifier: Modifier = Modifier) {
         Column {
             val username = remember { mutableStateOf(TextFieldValue()) }
             Username(username)
@@ -59,7 +59,7 @@ class LoginActivity : ComponentActivity() {
     }
 
     @Composable
-    fun Username(username: MutableState<TextFieldValue>) {
+    private fun Username(username: MutableState<TextFieldValue>) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
@@ -75,11 +75,10 @@ class LoginActivity : ComponentActivity() {
                 },
             )
         }
-
     }
 
     @Composable
-    fun Password(password: MutableState<TextFieldValue>) {
+    private fun Password(password: MutableState<TextFieldValue>) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
@@ -96,7 +95,7 @@ class LoginActivity : ComponentActivity() {
     }
 
     @Composable
-    fun RegisterButton() {
+    private fun RegisterButton() {
         Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
             Button(onClick = { startActivity(Intent(this@LoginActivity, RegisterActivity::class.java)) }) {
                 Text("Register")
@@ -105,7 +104,7 @@ class LoginActivity : ComponentActivity() {
     }
 
     @Composable
-    fun LoginButton(username: MutableState<TextFieldValue>, password: MutableState<TextFieldValue>) {
+    private fun LoginButton(username: MutableState<TextFieldValue>, password: MutableState<TextFieldValue>) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Bottom,
@@ -117,12 +116,14 @@ class LoginActivity : ComponentActivity() {
             Button(onClick = {
                 if (!Utility.userLogin(username = username.value.text, password = password.value.text)) {
                     openDialog.value = true
+                } else {
+                    startActivity(Intent(this@LoginActivity, FitnessStudioActivity::class.java))
                 }
 
             }) { Text(text = "Login") }
 
             if (openDialog.value) {
-                Popup.generatePopup(titleText = "Wrong Login", displayText = "Username or Password is wrong", good = false, openDialog = openDialog)
+                Popup.GeneratePopup(titleText = "Wrong Login", displayText = "Username or Password is wrong", good = false, openDialog = openDialog)
             }
         }
     }

@@ -41,7 +41,7 @@ class RegisterActivity : ComponentActivity() {
 //    Column(horizontalAlignment = Alignment.CenterHorizontally ,verticalArrangement = Arrangement.Bottom,modifier = Modifier.fillMaxSize()) {
 
     @Composable
-    fun Register() {
+    private fun Register() {
         val username = remember { mutableStateOf(TextFieldValue()) }
         val password = remember { mutableStateOf(TextFieldValue()) }
         val email = remember { mutableStateOf(TextFieldValue()) }
@@ -98,7 +98,7 @@ class RegisterActivity : ComponentActivity() {
                 }
                 Button(onClick = {
 
-                    if (Utility.register(username.value.text, password.value.text, email.value.text, firstname.value.text, lastname.value.text)) {
+                    if (Utility.registerUser(username.value.text, password.value.text, email.value.text, firstname.value.text, lastname.value.text)) {
                         openDialog.value = true
                         text.value = "Registrierung erfolgreich"
                         good.value = true
@@ -115,7 +115,7 @@ class RegisterActivity : ComponentActivity() {
                     Text(text = "Register")
                 }
                 if (openDialog.value) {
-                    Popup.generatePopup(titleText = "Registrierung", displayText = text.value, good = good.value, openDialog)
+                    Popup.GeneratePopup(titleText = "Registrierung", displayText = text.value, good = good.value, openDialog)
 
                 }
             }
