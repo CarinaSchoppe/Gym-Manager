@@ -79,6 +79,7 @@ class LoginActivity : ComponentActivity() {
 
     @Composable
     private fun Password(password: MutableState<TextFieldValue>) {
+
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
@@ -117,7 +118,7 @@ class LoginActivity : ComponentActivity() {
                 if (!Utility.userLogin(username = username.value.text, password = password.value.text)) {
                     openDialog.value = true
                 } else {
-                    startActivity(Intent(this@LoginActivity, FitnessStudioActivity::class.java))
+                    startActivity(Intent(this@LoginActivity, CreateFitnessstudioActivity::class.java))
                 }
 
             }) { Text(text = "Login") }
