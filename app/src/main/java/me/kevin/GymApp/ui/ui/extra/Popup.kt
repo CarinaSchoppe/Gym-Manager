@@ -1,4 +1,4 @@
-package me.kevin.GymApp.ui.ui
+package me.kevin.GymApp.ui.ui.extra
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text

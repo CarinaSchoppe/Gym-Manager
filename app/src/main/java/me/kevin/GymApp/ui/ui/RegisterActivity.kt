@@ -24,6 +24,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import me.kevin.GymApp.backend.util.Utility
 import me.kevin.GymApp.ui.theme.GymAppTheme
+import me.kevin.GymApp.ui.ui.extra.Popup
 
 class RegisterActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
