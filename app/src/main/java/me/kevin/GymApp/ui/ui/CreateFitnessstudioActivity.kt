@@ -1,4 +1,4 @@
-package me.kevin.GymApp.ui
+package me.kevin.GymApp.ui.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
