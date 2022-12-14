@@ -45,7 +45,6 @@ class FitnessStudioActivity : ComponentActivity() {
     @Composable
     private fun FitnessStudio() {
 
-
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top,

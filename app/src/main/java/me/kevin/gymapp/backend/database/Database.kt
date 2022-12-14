@@ -82,6 +82,12 @@ class Database(val context: Context) : SQLiteOpenHelper(context, "GymApp.db", nu
     }
 
 
+    fun registerFitnessStudio(id: Int, name: String, description: String, location: String) {
+        val database = this.writableDatabase
+        database.execSQL("INSERT INTO Fitnessstudio (ID, Name, Beschreibung, Location) VALUES ($id, '$name', '$description', '$location')")
+        Log.d("Location Registered", location)
+    }
+
     fun registerUser(username: String, password: String, email: String, firstname: String, lastname: String) {
         val database = this.writableDatabase
         /*        //print the values

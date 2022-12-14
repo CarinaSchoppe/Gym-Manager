@@ -1,4 +1,4 @@
-package me.kevin.GymApp.ui.ui
+package me.kevin.gymapp.ui.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -22,11 +22,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import me.kevin.GymApp.backend.util.Utility
-import me.kevin.GymApp.ui.theme.GymAppTheme
-import me.kevin.GymApp.ui.ui.extra.Popup
+import me.kevin.gymapp.backend.util.Utility
+import me.kevin.gymapp.ui.theme.GymAppTheme
 
 class RegisterActivity : ComponentActivity() {
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

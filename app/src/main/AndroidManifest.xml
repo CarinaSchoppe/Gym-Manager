@@ -2,14 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-  <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyDIROI5y5E87HTam0UyZzQRF75zItzssGU"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+
     <application
+
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -20,32 +25,32 @@
         android:theme="@style/Theme.GymApp"
         tools:targetApi="31">
         <activity
-            android:name=".ui.ui.CreateFitnessstudioActivity"
+            android:name="me.kevin.gymapp.ui.ui.CreateFitnessstudioActivity"
             android:exported="false"
             android:label="@string/title_activity_create_fitnessstudio"
             android:theme="@style/Theme.GymApp" />
         <activity
-            android:name=".ui.ui.FitnessActivities"
+            android:name="me.kevin.gymapp.ui.ui.FitnessActivities"
             android:exported="false"
             android:label="@string/title_activity_fitness_activities"
             android:theme="@style/Theme.GymApp" />
         <activity
-            android:name=".ui.ui.MuscleGroupActivity"
+            android:name="me.kevin.gymapp.ui.ui.MuscleGroupActivity"
             android:exported="false"
             android:label="@string/title_activity_muscle_group"
             android:theme="@style/Theme.GymApp" />
         <activity
-            android:name=".ui.ui.FitnessStudioActivity"
+            android:name="me.kevin.gymapp.ui.ui.FitnessStudioActivity"
             android:exported="false"
             android:label="@string/title_activity_fitness_studio"
             android:theme="@style/Theme.GymApp" />
         <activity
-            android:name=".ui.ui.RegisterActivity"
+            android:name="me.kevin.gymapp.ui.ui.RegisterActivity"
             android:exported="false"
             android:label="@string/title_activity_register"
             android:theme="@style/Theme.GymApp" />
         <activity
-            android:name=".ui.ui.LoginActivity"
+            android:name="me.kevin.gymapp.ui.ui.LoginActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.GymApp">
@@ -55,6 +60,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDIROI5y5E87HTam0UyZzQRF75zItzssGU" />
+
     </application>
 
 </manifest>

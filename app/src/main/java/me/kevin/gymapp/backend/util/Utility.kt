@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.google.android.gms.maps.model.LatLng
 import me.kevin.gymapp.backend.database.Database
 import me.kevin.gymapp.backend.objects.FitnessStudio
 import me.kevin.gymapp.backend.objects.Musclegroup
@@ -22,6 +23,7 @@ import me.kevin.gymapp.backend.objects.User
 import me.kevin.gymapp.backend.objects.UserFavorites
 
 object Utility {
+
 
     fun userLogin(username: String, password: String): Boolean {
         var username = username
@@ -71,7 +73,16 @@ object Utility {
     }
 
 
-    fun registerFitnessStudio(studioName: String, studioDescription: String) {
+    fun registerFitnessStudio(studioName: String, studioDescription: String, location: LatLng) {
+        //get the highest id number of the studios
+        val number = studioSet.maxOfOrNull { it.id } ?: 0
+
+        val studio = FitnessStudio(number + 1, studioName, "${location.latitude};${location.longitude}", studioDescription)
+
+        studioSet.add(studio)
+
+        database.registerFitnessStudio(studio.id, studioName, studioDescription, studio.location)
+
     }
 
     fun registerUser(username: String, password: String, email: String, firstname: String, lastname: String): Boolean {
