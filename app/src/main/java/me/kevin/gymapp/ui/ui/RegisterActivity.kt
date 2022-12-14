@@ -117,7 +117,7 @@ class RegisterActivity : ComponentActivity() {
                     Text(text = "Register")
                 }
                 if (openDialog.value) {
-                    Popup.GeneratePopup(titleText = "Registrierung", displayText = text.value, good = good.value, openDialog)
+                    Popup.GeneratePopup(titleText = "Registrierung", displayText = text.value, openDialog = openDialog)
 
                 }
             }

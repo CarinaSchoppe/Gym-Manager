@@ -27,8 +27,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
@@ -57,6 +57,7 @@ class CreateFitnessstudioActivity : ComponentActivity() {
     }
 
 
+    @Preview
     @Composable
     private fun CreateFitnessstudio() {
 
@@ -109,24 +110,24 @@ class CreateFitnessstudioActivity : ComponentActivity() {
             TextField(
                 value = studioDescription.value,
                 onValueChange = { studioDescription.value = it },
-                visualTransformation = PasswordVisualTransformation(),
                 placeholder = { Text("Studio Beschreibung") }
             )
+        }
 
-            /*   Button(onClick = {
-
-               }) {
-                   Text(text = "GPS Position")
-
-               }*/
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Bottom,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 55.dp)
+        ) {
             Button(onClick = { createStudio(state, studioName.value.text, studioDescription.value.text, openDialog) }) {
                 Text(text = "Fitnessstudio erstellen")
             }
             Popup.GeneratePopup(titleText = "Missing Text", displayText = "", good = false, openDialog = openDialog)
-
         }
-
         Utility.BackButton(activity = this@CreateFitnessstudioActivity, clazz = FitnessActivities::class.java)
+
     }
 
 
