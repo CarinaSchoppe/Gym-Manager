@@ -1,15 +1,15 @@
-package me.kevin.GymApp.backend.database
+package me.kevin.gymapp.backend.database
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
-import me.kevin.GymApp.backend.objects.FitnessStudio
-import me.kevin.GymApp.backend.objects.Musclegroup
-import me.kevin.GymApp.backend.objects.Trainingsmap
-import me.kevin.GymApp.backend.objects.User
-import me.kevin.GymApp.backend.objects.UserFavorites
-import me.kevin.GymApp.backend.util.Utility
+import me.kevin.gymapp.backend.objects.FitnessStudio
+import me.kevin.gymapp.backend.objects.Musclegroup
+import me.kevin.gymapp.backend.objects.Trainingsmap
+import me.kevin.gymapp.backend.objects.User
+import me.kevin.gymapp.backend.objects.UserFavorites
+import me.kevin.gymapp.backend.util.Utility
 
 class Database(val context: Context) : SQLiteOpenHelper(context, "GymApp.db", null, 1) {
 

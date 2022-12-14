@@ -1,4 +1,4 @@
-package me.kevin.GymApp
+package me.kevin.gymapp
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

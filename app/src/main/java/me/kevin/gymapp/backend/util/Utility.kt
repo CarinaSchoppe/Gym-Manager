@@ -1,4 +1,4 @@
-package me.kevin.GymApp.backend.util
+package me.kevin.gymapp.backend.util
 
 import android.app.Activity
 import android.content.Context
@@ -14,12 +14,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import me.kevin.GymApp.backend.database.Database
-import me.kevin.GymApp.backend.objects.FitnessStudio
-import me.kevin.GymApp.backend.objects.Musclegroup
-import me.kevin.GymApp.backend.objects.Trainingsmap
-import me.kevin.GymApp.backend.objects.User
-import me.kevin.GymApp.backend.objects.UserFavorites
+import me.kevin.gymapp.backend.database.Database
+import me.kevin.gymapp.backend.objects.FitnessStudio
+import me.kevin.gymapp.backend.objects.Musclegroup
+import me.kevin.gymapp.backend.objects.Trainingsmap
+import me.kevin.gymapp.backend.objects.User
+import me.kevin.gymapp.backend.objects.UserFavorites
 
 object Utility {
 

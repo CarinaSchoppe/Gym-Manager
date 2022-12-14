@@ -1,4 +1,4 @@
-package me.kevin.GymApp.backend.util
+package me.kevin.gymapp.backend.util
 
 import android.util.Log
 import org.mindrot.jbcrypt.BCrypt

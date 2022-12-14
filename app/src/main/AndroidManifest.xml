@@ -7,7 +7,8 @@
         android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
- <!-- <meta-data android:name="com.google.android.geo.API_KEY" android:value="your API key"/>-->
+    <uses-permission android:name="android.permission.INTERNET"/>
+  <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyDIROI5y5E87HTam0UyZzQRF75zItzssGU"/>
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"

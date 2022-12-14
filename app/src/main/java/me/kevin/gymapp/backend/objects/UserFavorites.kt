@@ -1,3 +1,3 @@
-package me.kevin.GymApp.backend.objects
+package me.kevin.gymapp.backend.objects
 
 data class UserFavorites(val userID: Int, val trainingsmapID: Int)
