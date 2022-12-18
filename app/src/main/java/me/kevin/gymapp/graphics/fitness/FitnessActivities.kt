@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import me.kevin.gymapp.graphics.musclegroup.CreateMuscleGroupActivity
+import me.kevin.gymapp.graphics.studio.CreateFitnessStudioActivity
 import me.kevin.gymapp.graphics.ui.theme.GymAppTheme
 
 class FitnessActivities : ComponentActivity() {
@@ -54,9 +55,9 @@ class FitnessActivities : ComponentActivity() {
                     .fillMaxWidth()
             ) {
                 //create a button for each fitness activity
-                Button(onClick = { startActivity(Intent(this@FitnessActivities, CreateMuscleGroupActivity::class.java)) }) { Text(text = "Add Studio") }
+                Button(onClick = { startActivity(Intent(this@FitnessActivities, CreateFitnessStudioActivity::class.java)) }) { Text(text = "Add Studio") }
                 Button(onClick = { startActivity(Intent(this@FitnessActivities, CreateMuscleGroupActivity::class.java)) }) { Text(text = "Add Musclegroup") }
-                Button(onClick = { startActivity(Intent(this@FitnessActivities, CreateMuscleGroupActivity::class.java)) }) { Text(text = "Add Fitnessplan") }
+                Button(onClick = { startActivity(Intent(this@FitnessActivities, CreateFitnessActivity::class.java)) }) { Text(text = "Add Fitnessplan") }
             }
 
 
