@@ -16,7 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import me.kevin.gymapp.graphics.ui.ui.theme.GymAppTheme
+import me.kevin.gymapp.graphics.ui.theme.GymAppTheme
 
 class CreateFitnessActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
