@@ -179,6 +179,12 @@ class Database(val context: Context) : SQLiteOpenHelper(context, "GymApp.db", nu
         Log.d("MuscleGroup Registered", name)
     }
 
+    fun createTrainingsPlan(id: Int, name: String, description: String, studioId: Int, muscleGroupId: Int) {
+        val database = this.writableDatabase
+        database.execSQL("INSERT INTO Trainingsplan (ID, Name, Beschreibung, StudioID, MuskelgruppeID) VALUES ($id, '$name', '$description', $studioId, $muscleGroupId)")
+        Log.d("Trainingsplan Registered", name)
+    }
+
 }
 
 

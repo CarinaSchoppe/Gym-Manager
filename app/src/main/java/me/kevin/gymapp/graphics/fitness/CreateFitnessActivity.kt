@@ -25,6 +25,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import me.kevin.gymapp.backend.util.Utility
 import me.kevin.gymapp.graphics.extra.BackButton
+import me.kevin.gymapp.graphics.extra.Popup
 import me.kevin.gymapp.graphics.ui.theme.GymAppTheme
 import kotlin.streams.toList
 
@@ -46,17 +47,32 @@ class CreateFitnessActivity : ComponentActivity() {
         val name = remember {
             mutableStateOf(TextFieldValue())
         }
+        val description = remember {
+            mutableStateOf(TextFieldValue())
+        }
         val possibleStudioNames = Utility.studioSet.stream().map { it.name }.toList()
 
         val selectedStudio = remember {
             mutableStateOf("")
         }
+        val selectedMuscleGroup = remember {
+            mutableStateOf("")
+        }
         val studioName = remember {
             mutableStateOf("Studioname: ")
         }
-        val expanded = remember {
+        val muscleGroupName = remember {
+            mutableStateOf("MuscleGroup: ")
+        }
+        val expandedStudio = remember {
             mutableStateOf(false)
         }
+        val expandedMuscle = remember {
+            mutableStateOf(false)
+        }
+
+
+        val created = remember { mutableStateOf(false) }
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -64,21 +80,31 @@ class CreateFitnessActivity : ComponentActivity() {
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-            Text(text = "Create Fitness Activity")
+            Text(text = "Create Fitness Map")
             Spacer(modifier = Modifier.height(5.dp))
             TextField(value = name.value, onValueChange = { name.value = it }, placeholder = { Text("Name") })
+            TextField(value = description.value, onValueChange = { description.value = it }, placeholder = { Text("Description") })
             Spacer(modifier = Modifier.height(5.dp))
-
-
-            val studioNameText = Text(text = studioName.value)
-
-            Button(onClick = { expanded.value = true }) {
+            Text(text = studioName.value)
+            Spacer(modifier = Modifier.height(5.dp))
+            Text(text = muscleGroupName.value)
+            Spacer(modifier = Modifier.height(5.dp))
+            Button(onClick = { expandedStudio.value = true }) {
                 Text(text = "Select Studio")
             }
+            Spacer(modifier = Modifier.height(5.dp))
+            Button(onClick = { expandedMuscle.value = true }) {
+                Text(text = "Select Musclegroup")
+            }
 
+            Spacer(modifier = Modifier.height(5.dp))
 
-            //place DropdownMenu in the mittle
-
+            Button(onClick = {
+                if (Utility.createActivityTask(name.value.text, muscleGroupName.value, studioName.value, description.value.text))
+                    created.value = true
+            }) {
+                Text(text = "Create")
+            }
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
@@ -86,23 +112,41 @@ class CreateFitnessActivity : ComponentActivity() {
                     .fillMaxSize()
             ) {
                 DropdownMenu(
-                    expanded = expanded.value,
-                    onDismissRequest = { expanded.value = false },
+                    expanded = expandedStudio.value,
+                    onDismissRequest = { expandedStudio.value = false },
                     modifier = Modifier.fillMaxWidth()
 
                 ) {
-                    listOf("Test1", "Test2", "test3").forEach { name ->
+                    Utility.studioSet.forEach { studio ->
                         DropdownMenuItem(onClick = {
-                            selectedStudio.value = name
-                            expanded.value = false
-                            studioName.value = "Studioname: $name"
+                            selectedStudio.value = studio.name
+                            expandedStudio.value = false
+                            studioName.value = "Studioname: ${studio.name}"
                         },
-                            text = { Text(name) })
+                            text = { Text(studio.name) })
+                    }
+                }
+                DropdownMenu(
+                    expanded = expandedMuscle.value,
+                    onDismissRequest = { expandedMuscle.value = false },
+                    modifier = Modifier.fillMaxWidth()
+
+                ) {
+                    Utility.muscleGroupSet.forEach { muscleGroup ->
+                        DropdownMenuItem(onClick = {
+                            selectedMuscleGroup.value = muscleGroup.name
+                            expandedMuscle.value = false
+                            muscleGroupName.value = "MuscleGroup: ${muscleGroup.name}"
+                        },
+                            text = { Text(muscleGroup.name) })
                     }
                 }
             }
 
+
         }
+        if (created.value)
+            Popup.GeneratePopup("Activity", "ActivityCreated", true, created)
 
         BackButton.BackButton(activity = this@CreateFitnessActivity, clazz = FitnessActivities::class.java)
     }

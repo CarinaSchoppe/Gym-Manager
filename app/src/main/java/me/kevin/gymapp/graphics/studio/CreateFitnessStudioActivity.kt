@@ -131,7 +131,7 @@ class CreateFitnessStudioActivity : ComponentActivity() {
 
     fun createStudio(state: MarkerState, studioName: String, studioDescription: String, openDialog: MutableState<Boolean>) {
 
-        if (studioName.isEmpty() || studioDescription.isEmpty()) {
+        if (studioName.isBlank() || studioDescription.isBlank()) {
             openDialog.value = true
             return
         }

@@ -152,6 +152,25 @@ object Utility {
         userFavorites.addAll(database.getAllUserFavorites())
     }
 
+    fun createActivityTask(name: String, mscGroup: String, std: String, description: String): Boolean {
+        val studio = std.replace("Studioname: ", "")
+        val muscleGroup = mscGroup.replace("MuscleGroup: ", "")
+        if (name.isBlank() || muscleGroup.isBlank() || studio.isBlank() || description.isBlank()) {
+            return false
+        }
+
+        val number = trainingsmapSet.maxOfOrNull { it.id } ?: 0
+        val studioID = studioSet.first { it.name == studio }.id
+        val musclegroupID = muscleGroupSet.first { it.name == muscleGroup }.id
+        val trainingsmap = Trainingsmap(number + 1, name, description, studioID, musclegroupID)
+
+        trainingsmapSet.add(trainingsmap)
+
+        database.createTrainingsPlan(trainingsmap.id, trainingsmap.name, trainingsmap.description, trainingsmap.studioID, trainingsmap.muscleGroupID)
+
+        return true
+    }
+
     lateinit var selectedFitnessstudio: FitnessStudio
 
 
