@@ -1,4 +1,4 @@
-package me.kevin.gymapp.ui.ui
+package me.kevin.gymapp.graphics.studio
 
 import android.content.Intent
 import android.os.Bundle
@@ -26,7 +26,9 @@ import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import me.kevin.gymapp.backend.util.Utility
-import me.kevin.gymapp.ui.ui.theme.GymAppTheme
+import me.kevin.gymapp.graphics.extra.BackButton
+import me.kevin.gymapp.graphics.fitness.FitnessActivities
+import me.kevin.gymapp.graphics.ui.theme.GymAppTheme
 
 class FitnessStudioActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,7 +84,7 @@ class FitnessStudioActivity : ComponentActivity() {
         ) {
 
             Button(onClick = {
-                startActivity(Intent(this@FitnessStudioActivity, CreateFitnessstudioActivity::class.java))
+                startActivity(Intent(this@FitnessStudioActivity, CreateFitnessStudioActivity::class.java))
 
             }) {
                 Text(text = "Fitnessstudio Erstellen")
@@ -95,7 +97,7 @@ class FitnessStudioActivity : ComponentActivity() {
 
 
 
-        Utility.BackButton(activity = this@FitnessStudioActivity, clazz = FitnessActivities::class.java)
+        BackButton.BackButton(activity = this@FitnessStudioActivity, clazz = FitnessActivities::class.java)
     }
 }
 

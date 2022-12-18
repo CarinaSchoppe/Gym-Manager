@@ -1,4 +1,4 @@
-package me.kevin.gymapp.ui.ui
+package me.kevin.gymapp.graphics.studio
 
 import android.Manifest
 import android.content.Context
@@ -40,10 +40,13 @@ import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
 import me.kevin.gymapp.backend.util.Utility
-import me.kevin.gymapp.ui.ui.ui.theme.GymAppTheme
+import me.kevin.gymapp.graphics.extra.BackButton
+import me.kevin.gymapp.graphics.extra.Popup
+import me.kevin.gymapp.graphics.fitness.FitnessActivities
+import me.kevin.gymapp.graphics.ui.theme.GymAppTheme
 
 
-class CreateFitnessstudioActivity : ComponentActivity() {
+class CreateFitnessStudioActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -79,15 +82,8 @@ class CreateFitnessstudioActivity : ComponentActivity() {
             position = CameraPosition.fromLatLngZoom(studioPos, 12f)
         }
 
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            GoogleMap(modifier = Modifier.fillMaxWidth(), cameraPositionState = cameraState, onMapClick = { state.position = it }) {
-                Marker(state = state, title = "Fitnessstudio Position")
-            }
+        GoogleMap(cameraPositionState = cameraState, onMapClick = { state.position = it }) {
+            Marker(state = state, title = "Fitnessstudio Position")
         }
 
         Column(
@@ -119,14 +115,16 @@ class CreateFitnessstudioActivity : ComponentActivity() {
             verticalArrangement = Arrangement.Bottom,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 55.dp)
+                .padding(bottom = 65.dp)
         ) {
             Button(onClick = { createStudio(state, studioName.value.text, studioDescription.value.text, openDialog) }) {
                 Text(text = "Fitnessstudio erstellen")
             }
-            Popup.GeneratePopup(titleText = "Missing Text", displayText = "", good = false, openDialog = openDialog)
+
+            if (openDialog.value)
+                Popup.GeneratePopup(titleText = "Missing Text", displayText = "You need to fill the blanks", good = false, openDialog = openDialog)
         }
-        Utility.BackButton(activity = this@CreateFitnessstudioActivity, clazz = FitnessActivities::class.java)
+        BackButton.BackButton(activity = this@CreateFitnessStudioActivity, clazz = FitnessActivities::class.java)
 
     }
 

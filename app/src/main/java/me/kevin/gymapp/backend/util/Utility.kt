@@ -1,19 +1,6 @@
 package me.kevin.gymapp.backend.util
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
-import androidx.activity.ComponentActivity
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.google.android.gms.maps.model.LatLng
 import me.kevin.gymapp.backend.database.Database
 import me.kevin.gymapp.backend.objects.FitnessStudio
@@ -148,6 +135,15 @@ object Utility {
 
     val userFavorites = mutableSetOf<UserFavorites>()
 
+    fun createMuscleGroup(name: String) {
+        if (muscleGroupSet.find { it.name == name } == null) {
+            val number = muscleGroupSet.maxOfOrNull { it.id } ?: 0
+            val muscleGroup = Musclegroup(number + 1, name)
+            muscleGroupSet.add(muscleGroup)
+            database.createMuscleGroup(muscleGroup.id, muscleGroup.name)
+        }
+    }
+
     fun fillValuesFromDataBase() {
         userSet.addAll(database.getAllUsers())
         studioSet.addAll(database.getAllFitnessStudios())
@@ -158,26 +154,5 @@ object Utility {
 
     lateinit var selectedFitnessstudio: FitnessStudio
 
-    @Composable
-    fun BackButton(activity: Activity, clazz: Class<out ComponentActivity>) {
 
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Bottom,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 15.dp)
-        ) {
-
-            Button(onClick = {
-                //start old activity
-                activity.startActivity(Intent(activity, clazz))
-            }) {
-                Text(text = "Back")
-            }
-
-        }
-
-
-    }
 }

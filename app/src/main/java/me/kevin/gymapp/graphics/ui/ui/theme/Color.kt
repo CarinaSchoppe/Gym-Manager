@@ -1,4 +1,4 @@
-package me.kevin.gymapp.ui.theme
+package me.kevin.gymapp.graphics.ui.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

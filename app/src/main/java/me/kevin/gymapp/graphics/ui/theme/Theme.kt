@@ -1,4 +1,4 @@
-package me.kevin.gymapp.ui.ui.ui.theme
+package me.kevin.gymapp.graphics.ui.theme
 
 import android.app.Activity
 import android.os.Build

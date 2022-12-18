@@ -1,4 +1,4 @@
-package me.kevin.gymapp.ui.ui
+package me.kevin.gymapp.graphics.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -23,7 +23,9 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import me.kevin.gymapp.backend.util.Utility
-import me.kevin.gymapp.ui.theme.GymAppTheme
+import me.kevin.gymapp.graphics.extra.Popup
+import me.kevin.gymapp.graphics.fitness.FitnessActivities
+import me.kevin.gymapp.graphics.ui.theme.GymAppTheme
 
 class LoginActivity : ComponentActivity() {
 
@@ -118,7 +120,7 @@ class LoginActivity : ComponentActivity() {
                 if (!Utility.userLogin(username = username.value.text, password = password.value.text)) {
                     openDialog.value = true
                 } else {
-                    startActivity(Intent(this@LoginActivity, CreateFitnessstudioActivity::class.java))
+                    startActivity(Intent(this@LoginActivity, FitnessActivities::class.java))
                 }
 
             }) { Text(text = "Login") }
