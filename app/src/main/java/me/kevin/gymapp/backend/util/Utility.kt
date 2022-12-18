@@ -7,7 +7,6 @@ import me.kevin.gymapp.backend.objects.FitnessStudio
 import me.kevin.gymapp.backend.objects.Musclegroup
 import me.kevin.gymapp.backend.objects.Trainingsmap
 import me.kevin.gymapp.backend.objects.User
-import me.kevin.gymapp.backend.objects.UserFavorites
 
 object Utility {
 
@@ -133,7 +132,6 @@ object Utility {
 
     val userSet = mutableSetOf<User>()
 
-    val userFavorites = mutableSetOf<UserFavorites>()
 
     fun createMuscleGroup(name: String) {
         if (muscleGroupSet.find { it.name == name } == null) {
@@ -149,7 +147,6 @@ object Utility {
         studioSet.addAll(database.getAllFitnessStudios())
         trainingsmapSet.addAll(database.getAllTrainingsMaps())
         muscleGroupSet.addAll(database.getAllMuscleGroups())
-        userFavorites.addAll(database.getAllUserFavorites())
     }
 
     fun createActivityTask(name: String, mscGroup: String, std: String, description: String): Boolean {

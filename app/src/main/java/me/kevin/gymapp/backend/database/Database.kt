@@ -8,7 +8,6 @@ import me.kevin.gymapp.backend.objects.FitnessStudio
 import me.kevin.gymapp.backend.objects.Musclegroup
 import me.kevin.gymapp.backend.objects.Trainingsmap
 import me.kevin.gymapp.backend.objects.User
-import me.kevin.gymapp.backend.objects.UserFavorites
 import me.kevin.gymapp.backend.util.Utility
 
 class Database(val context: Context) : SQLiteOpenHelper(context, "GymApp.db", null, 1) {
@@ -22,7 +21,6 @@ class Database(val context: Context) : SQLiteOpenHelper(context, "GymApp.db", nu
                 'Username'	TEXT NOT NULL UNIQUE,
                 'Email'	TEXT NOT NULL UNIQUE,
                 'Password'	TEXT NOT NULL,
-                FOREIGN KEY("ID") REFERENCES "UserFavorites"("UserID"),
                 PRIMARY KEY('ID' AUTOINCREMENT)
             );""".trimIndent(),
 
@@ -44,7 +42,7 @@ class Database(val context: Context) : SQLiteOpenHelper(context, "GymApp.db", nu
                 "MuskelgruppeID"	INTEGER NOT NULL,
                 FOREIGN KEY("MuskelgruppeID") REFERENCES "Muskelgruppe"("ID"),
                 FOREIGN KEY("StudioID") REFERENCES "Trainingsplan"("ID"),
-                FOREIGN KEY("ID") REFERENCES "UserFavorites"("TrainingsplanID"),
+
 
                 PRIMARY KEY("ID" AUTOINCREMENT)
     );""".trimIndent(),
@@ -54,16 +52,7 @@ class Database(val context: Context) : SQLiteOpenHelper(context, "GymApp.db", nu
 	"Name"	TEXT NOT NULL,
 	FOREIGN KEY("ID") REFERENCES "Trainingsplan"("ID"),
 	PRIMARY KEY("ID" AUTOINCREMENT)
-);""".trimIndent(),
-            """
-                CREATE TABLE  IF NOT EXISTS UserFavorites (
-                	"UserID"	INTEGER NOT NULL,
-                	"TrainingsplanID"	INTEGER NOT NULL,
-                	FOREIGN KEY("UserID") REFERENCES "Users"("ID"),
-                	FOREIGN KEY("TrainingsplanID") REFERENCES "Users"("ID"),
-                	PRIMARY KEY("UserID","TrainingsplanID")
-                );
-            """.trimIndent()
+);""".trimIndent()
         )
 
         for (table in tables) {
@@ -77,7 +66,7 @@ class Database(val context: Context) : SQLiteOpenHelper(context, "GymApp.db", nu
         database?.execSQL("DROP TABLE IF EXISTS Fitnessstudio")
         database?.execSQL("DROP TABLE IF EXISTS Trainingsplan")
         database?.execSQL("DROP TABLE IF EXISTS Muskelgruppe")
-        database?.execSQL("DROP TABLE IF EXISTS UserFavorites")
+
         onCreate(database)
     }
 
@@ -146,19 +135,7 @@ class Database(val context: Context) : SQLiteOpenHelper(context, "GymApp.db", nu
         return muscleGroups
     }
 
-    fun getAllUserFavorites(): List<UserFavorites> {
-        val database = this.readableDatabase
-        val cursor = database.rawQuery("SELECT * FROM UserFavorites", null)
 
-        val userFavorites = mutableListOf<UserFavorites>()
-        while (cursor.moveToNext()) {
-            val userFavorite = UserFavorites(cursor.getInt(0), cursor.getInt(1))
-            userFavorites.add(userFavorite)
-        }
-        cursor.close()
-        return userFavorites
-
-    }
 
     fun getAllTrainingsMaps(): List<Trainingsmap> {
         val database = this.readableDatabase
