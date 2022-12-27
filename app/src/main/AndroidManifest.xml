@@ -24,6 +24,11 @@
         android:theme="@style/Theme.GymApp"
         tools:targetApi="31">
         <activity
+            android:name="me.kevin.gymapp.graphics.fitness.FitnessActivity"
+            android:exported="false"
+            android:label="@string/title_activity_fitness"
+            android:theme="@style/Theme.GymApp" />
+        <activity
             android:name="me.kevin.gymapp.graphics.fitness.CreateFitnessActivity"
             android:exported="false"
             android:label="@string/title_activity_create_fitness"

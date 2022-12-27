@@ -170,5 +170,6 @@ object Utility {
 
     lateinit var selectedFitnessstudio: FitnessStudio
 
+    lateinit var selectedFitnessActivity: Trainingsmap
 
 }

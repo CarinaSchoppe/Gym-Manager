@@ -7,4 +7,5 @@
     <string name="title_activity_create_fitnessstudio">CreateFitnessstudioActivity</string>
     <string name="title_activity_create_muscle_group">CreateMuscleGroupActivity</string>
     <string name="title_activity_create_fitness">CreateFitnessActivity</string>
+    <string name="title_activity_fitness">FitnessActivity</string>
 </resources>
