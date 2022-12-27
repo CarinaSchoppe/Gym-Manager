@@ -33,6 +33,7 @@ import me.kevin.GymApp.R
 import me.kevin.gymapp.backend.util.Utility
 import me.kevin.gymapp.graphics.musclegroup.CreateMuscleGroupActivity
 import me.kevin.gymapp.graphics.studio.CreateFitnessStudioActivity
+import me.kevin.gymapp.graphics.studio.FitnessStudioActivity
 import me.kevin.gymapp.graphics.ui.theme.GymAppTheme
 
 class FitnessActivities : ComponentActivity() {
@@ -73,7 +74,10 @@ class FitnessActivities : ComponentActivity() {
             }
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                 for (activity in Utility.trainingsmapSet) {
-                    Button(onClick = { startActivity(Intent(this@FitnessActivities, CreateFitnessActivity::class.java)) }) {
+                    Button(onClick = {
+                        Utility.selectedFitnessstudio = activity
+                        startActivity(Intent(this@FitnessActivities, FitnessStudioActivity::class.java))
+                    }) {
                         Column(
                             modifier = Modifier.padding(5.dp),
                             horizontalAlignment = Alignment.CenterHorizontally,
@@ -99,7 +103,7 @@ class FitnessActivities : ComponentActivity() {
                             // adding text on below line.
                             Text(
                                 // specifying text as android
-                                "Android",
+                                text = activity.name,
 
                                 // on below line adding style
                                 style = TextStyle(fontWeight = FontWeight.Bold),
