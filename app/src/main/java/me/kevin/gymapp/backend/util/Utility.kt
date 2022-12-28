@@ -33,15 +33,12 @@ object Utility {
 
 
         //check if user exists
-        if (userSet.find { it.username == username } == null) {
-
+        if (userSet.find { it.username == username } == null)
             return false
 
-        }
         //check if password is correct
         if (!Cypher.checkPassword(username, password, userSet.find { it.username == username }!!.password)) {
             return false
-
         }
 
         currentUser = userSet.find { it.username == username }!!

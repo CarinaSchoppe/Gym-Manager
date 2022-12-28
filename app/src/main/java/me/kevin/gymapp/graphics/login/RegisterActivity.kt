@@ -29,7 +29,6 @@ import me.kevin.gymapp.graphics.ui.theme.GymAppTheme
 
 class RegisterActivity : ComponentActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -101,7 +100,6 @@ class RegisterActivity : ComponentActivity() {
                     mutableStateOf(false)
                 }
                 Button(onClick = {
-
                     if (Utility.registerUser(username.value.text, password.value.text, email.value.text, firstname.value.text, lastname.value.text)) {
                         openDialog.value = true
                         text.value = "Registrierung erfolgreich"
@@ -120,7 +118,6 @@ class RegisterActivity : ComponentActivity() {
                 }
                 if (openDialog.value) {
                     Popup.GeneratePopup(titleText = "Registrierung", displayText = text.value, openDialog = openDialog)
-
                 }
             }
             BackButton.BackButton(activity = this@RegisterActivity, clazz = LoginActivity::class.java)

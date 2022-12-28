@@ -61,7 +61,7 @@ class CreateMuscleGroupActivity : ComponentActivity() {
             Spacer(modifier = Modifier.padding(10.dp))
 
             Button(onClick = {
-                if (text.value.text.isBlank() || text.value.text.isBlank()) {
+                if (text.value.text.isBlank()) {
                     return@Button
                 }
 

@@ -97,7 +97,7 @@ class FitnessActivities : ComponentActivity() {
                                     .width(200.dp)
                             )
                             // adding spacer on below line.
-                            Spacer(Modifier.height(10.dp))
+                            Spacer(Modifier.height(5.dp))
 
                             // adding text on below line.
                             Text(

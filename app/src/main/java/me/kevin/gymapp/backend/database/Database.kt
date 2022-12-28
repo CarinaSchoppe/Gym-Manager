@@ -88,9 +88,8 @@ class Database(val context: Context) : SQLiteOpenHelper(context, "GymApp.db", nu
 
         database.execSQL("INSERT INTO Users (Firstname, Lastname, Username, Email, Password) VALUES ('$username', '$password', '$email', '$firstname', '$lastname');")
 
-        var user = User(0, username, password, email, firstname, lastname)
+        var user = User(Utility.userSet.size + 1, username, password, email, firstname, lastname)
         //get the highest id in the dataset
-        user.id = Utility.userSet.size
         Utility.userSet.add(user)
         Log.d("SQL", "User registered")
     }
@@ -134,7 +133,6 @@ class Database(val context: Context) : SQLiteOpenHelper(context, "GymApp.db", nu
         cursor.close()
         return muscleGroups
     }
-
 
 
     fun getAllTrainingsMaps(): List<Trainingsmap> {

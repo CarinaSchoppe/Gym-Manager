@@ -27,7 +27,6 @@ import me.kevin.gymapp.backend.util.Utility
 import me.kevin.gymapp.graphics.extra.BackButton
 import me.kevin.gymapp.graphics.extra.Popup
 import me.kevin.gymapp.graphics.ui.theme.GymAppTheme
-import kotlin.streams.toList
 
 class CreateFitnessActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,21 +35,20 @@ class CreateFitnessActivity : ComponentActivity() {
             GymAppTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    createFitnessActivity()
+                    CreateFitnessActivityGUI()
                 }
             }
         }
     }
 
     @Composable
-    private fun createFitnessActivity() {
+    private fun CreateFitnessActivityGUI() {
         val name = remember {
             mutableStateOf(TextFieldValue())
         }
         val description = remember {
             mutableStateOf(TextFieldValue())
         }
-        val possibleStudioNames = Utility.studioSet.stream().map { it.name }.toList()
 
         val selectedStudio = remember {
             mutableStateOf("")
