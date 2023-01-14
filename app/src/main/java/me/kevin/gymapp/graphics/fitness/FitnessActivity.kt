@@ -11,10 +11,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -42,13 +45,15 @@ class FitnessActivity : ComponentActivity() {
     @Composable
     private fun FitnessActivityView(selectedFitnessActivity: Trainingsmap) {
         val muscleGroup = Utility.muscleGroupSet.stream().filter { it.id == selectedFitnessActivity.muscleGroupID }.findFirst().get()
-
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top,
             modifier = Modifier
                 .fillMaxWidth()
         ) {
+            val checked = remember { mutableStateOf(false) }
+            if (Utility.userFavoritesSet.find { it.userID == Utility.currentUser!!.id }!!.trainingsmapIDList.contains(selectedFitnessActivity.id))
+                checked.value = true
             Text(text = "Fitness Map")
             Spacer(modifier = Modifier.height(5.dp))
             Text(text = "Name: ${selectedFitnessActivity.name}")
@@ -57,6 +62,18 @@ class FitnessActivity : ComponentActivity() {
             Spacer(modifier = Modifier.height(5.dp))
             Text("Muskelgruppe: ${muscleGroup.name}")
             Spacer(modifier = Modifier.height(5.dp))
+            Text("Favorite")
+            Spacer(modifier = Modifier.height(5.dp))
+            Checkbox(checked = checked.value, onCheckedChange = { bool ->
+                checked.value = bool
+                if (checked.value) {
+                    Utility.addUserFavorites(Utility.currentUser!!, selectedFitnessActivity)
+                } else {
+                    Utility.removeUserFavorite(Utility.currentUser!!, selectedFitnessActivity)
+                }
+            })
+            Spacer(modifier = Modifier.height(5.dp))
+
             Button(onClick = {
                 val studio = Utility.studioSet.stream().filter { it.id == selectedFitnessActivity.studioID }.findFirst().get()
                 Utility.selectedFitnessstudio = studio

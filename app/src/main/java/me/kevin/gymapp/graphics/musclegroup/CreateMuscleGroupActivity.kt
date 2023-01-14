@@ -1,6 +1,7 @@
 package me.kevin.gymapp.graphics.musclegroup
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
@@ -67,6 +68,7 @@ class CreateMuscleGroupActivity : ComponentActivity() {
 
                 val name = text.value.text.trim()
                 Utility.createMuscleGroup(name)
+                Log.d("GymApp", "Created Muscle Group: $name")
                 open.value = true
             }) {
                 Text(text = "Create")

@@ -2,6 +2,7 @@ package me.kevin.gymapp.graphics.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
@@ -119,6 +120,7 @@ class LoginActivity : ComponentActivity() {
                 if (!Utility.userLogin(username = username.value.text, password = password.value.text)) {
                     openDialog.value = true
                 } else {
+                    Log.d("GymApp", "Login successful as userID ${Utility.currentUser!!.username}")
                     startActivity(Intent(this@LoginActivity, FitnessActivities::class.java))
                 }
 

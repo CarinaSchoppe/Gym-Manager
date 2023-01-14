@@ -2,6 +2,7 @@ package me.kevin.gymapp.graphics.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
@@ -104,6 +105,7 @@ class RegisterActivity : ComponentActivity() {
                         openDialog.value = true
                         text.value = "Registrierung erfolgreich"
                         good.value = true
+                        Log.d("GymApp", "register of user ${username.value.text}  successful")
                         startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
                     } else {
                         openDialog.value = true

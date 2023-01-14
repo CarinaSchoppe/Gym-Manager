@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
@@ -68,11 +69,16 @@ class CreateFitnessStudioActivity : ComponentActivity() {
         val studioDescription = remember { mutableStateOf(TextFieldValue()) }
 
         val lm: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        val location: Location? = if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
-            lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-        } else
-            lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        val location: Location? = try {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
+                lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+            } else
+                lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        } catch (e: Exception) {
+            //create a new location with 0 ,0 as values
+            Location("")
+        }
         val longitude: Double = location?.longitude ?: 0.0
         val latitude: Double = location?.latitude ?: 0.0
         val studioPos = LatLng(latitude, longitude)
@@ -137,6 +143,7 @@ class CreateFitnessStudioActivity : ComponentActivity() {
         }
 
         Utility.registerFitnessStudio(studioName, studioDescription, state.position)
+        Log.d("GymApp", "Studio ${studioName} created")
     }
 
 }

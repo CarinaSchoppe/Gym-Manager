@@ -56,7 +56,6 @@ object Utility {
         database = Database(context)
     }
 
-
     fun registerFitnessStudio(studioName: String, studioDescription: String, location: LatLng) {
         //get the highest id number of the studios
         val number = studioSet.maxOfOrNull { it.id } ?: 0

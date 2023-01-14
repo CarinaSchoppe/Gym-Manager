@@ -17,10 +17,13 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -51,6 +54,12 @@ class FitnessActivities : ComponentActivity() {
 
     @Composable
     private fun createFitnessActivityMap() {
+
+        val userFavoritesChecked = remember {
+            mutableStateOf(false)
+        }
+
+
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top,
@@ -70,9 +79,12 @@ class FitnessActivities : ComponentActivity() {
                 Button(onClick = { startActivity(Intent(this@FitnessActivities, CreateFitnessStudioActivity::class.java)) }) { Text(text = "Add Studio") }
                 Button(onClick = { startActivity(Intent(this@FitnessActivities, CreateMuscleGroupActivity::class.java)) }) { Text(text = "Add Musclegroup") }
                 Button(onClick = { startActivity(Intent(this@FitnessActivities, CreateFitnessActivity::class.java)) }) { Text(text = "Add Fitnessplan") }
+                //add a checkbox with the name "Favorites" to the row that changes the userFavoritesChecked value
+                Checkbox(checked = userFavoritesChecked.value, onCheckedChange = { userFavoritesChecked.value = it })
+
             }
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                for (activity in Utility.trainingsmapSet) {
+                for (activity in Utility.trainingsmapSet.filter { userFavoritesChecked.value == false || Utility.userFavoritesSet.find { it.userID == Utility.currentUser!!.id }!!.trainingsmapIDList.contains(it.id) }) {
                     Button(onClick = {
                         Utility.selectedFitnessActivity = activity
                         startActivity(Intent(this@FitnessActivities, FitnessActivity::class.java))

@@ -1,6 +1,7 @@
 package me.kevin.gymapp.graphics.fitness
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
@@ -116,6 +117,7 @@ class CreateFitnessActivity : ComponentActivity() {
 
                 ) {
                     Utility.studioSet.forEach { studio ->
+                        Log.d("GymApp", "Studio: ${studio.name} added")
                         DropdownMenuItem(onClick = {
                             selectedStudio.value = studio.name
                             expandedStudio.value = false
@@ -131,6 +133,7 @@ class CreateFitnessActivity : ComponentActivity() {
 
                 ) {
                     Utility.muscleGroupSet.forEach { muscleGroup ->
+                        Log.d("GymApp", "MuscleGroup: ${muscleGroup.name} added to dropdown")
                         DropdownMenuItem(onClick = {
                             selectedMuscleGroup.value = muscleGroup.name
                             expandedMuscle.value = false
