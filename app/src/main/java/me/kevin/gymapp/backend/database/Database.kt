@@ -8,6 +8,7 @@ import me.kevin.gymapp.backend.objects.FitnessStudio
 import me.kevin.gymapp.backend.objects.Musclegroup
 import me.kevin.gymapp.backend.objects.Trainingsmap
 import me.kevin.gymapp.backend.objects.User
+import me.kevin.gymapp.backend.objects.UserFavorites
 import me.kevin.gymapp.backend.util.Utility
 
 class Database(val context: Context) : SQLiteOpenHelper(context, "GymApp.db", null, 1) {
@@ -24,6 +25,13 @@ class Database(val context: Context) : SQLiteOpenHelper(context, "GymApp.db", nu
                 PRIMARY KEY('ID' AUTOINCREMENT)
             );""".trimIndent(),
 
+            """CREATE TABLE IF NOT EXISTS UserFavorites (
+                "UserID" INTEGER NOT NULL,
+                "TrainingsMapID" INTEGER NOT NULL,
+                FOREIGN KEY("UserID") REFERENCES "Users"("ID"),
+                FOREIGN KEY("TrainingsMapID") REFERENCES "Trainingsplan"("ID"),
+                PRIMARY KEY("UserID","TrainingsMapID"));
+                """.trimIndent(),
             """
         CREATE TABLE IF NOT EXISTS Fitnessstudio (
 	"ID"	INTEGER NOT NULL UNIQUE,
@@ -66,6 +74,7 @@ class Database(val context: Context) : SQLiteOpenHelper(context, "GymApp.db", nu
         database?.execSQL("DROP TABLE IF EXISTS Fitnessstudio")
         database?.execSQL("DROP TABLE IF EXISTS Trainingsplan")
         database?.execSQL("DROP TABLE IF EXISTS Muskelgruppe")
+        database?.execSQL("DROP TABLE IF EXISTS UserFavorites")
 
         onCreate(database)
     }
@@ -75,6 +84,15 @@ class Database(val context: Context) : SQLiteOpenHelper(context, "GymApp.db", nu
         val database = this.writableDatabase
         database.execSQL("INSERT INTO Fitnessstudio (ID, Name, Beschreibung, Location) VALUES ($id, '$name', '$description', '$location')")
         Log.d("Location Registered", location)
+    }
+
+    fun updateUserFavorites(userFavorites: UserFavorites) {
+        val database = this.writableDatabase
+        database.execSQL("DELETE FROM UserFavorites WHERE UserID = ${userFavorites.userID}")
+        for (map in userFavorites.trainingsmapIDList) {
+            database.execSQL("INSERT INTO UserFavorites (UserID, TrainingsMapID) VALUES (${userFavorites.userID}, ${map})")
+        }
+
     }
 
     fun registerUser(username: String, password: String, email: String, firstname: String, lastname: String) {
@@ -107,6 +125,24 @@ class Database(val context: Context) : SQLiteOpenHelper(context, "GymApp.db", nu
         return users
 
     }
+
+    fun loadAllUserFavorites() {
+        val database = this.readableDatabase
+        val cursor = database.rawQuery("SELECT * FROM UserFavorites", null)
+        while (cursor.moveToNext()) {
+            //find user with id
+            val user = Utility.userSet.find { it.id == cursor.getInt(0) }
+            if (user != null) {
+                val userFaUtility: UserFavorites = Utility.userFavoritesSet.find { it.userID == user.id } ?: run {
+                    val userFavorites = UserFavorites(user.id, mutableSetOf())
+                    userFavorites
+                }
+                userFaUtility.trainingsmapIDList.add(cursor.getInt(1))
+            }
+        }
+        cursor.close()
+    }
+
 
     fun getAllFitnessStudios(): List<FitnessStudio> {
         val database = this.readableDatabase

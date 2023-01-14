@@ -7,6 +7,7 @@ import me.kevin.gymapp.backend.objects.FitnessStudio
 import me.kevin.gymapp.backend.objects.Musclegroup
 import me.kevin.gymapp.backend.objects.Trainingsmap
 import me.kevin.gymapp.backend.objects.User
+import me.kevin.gymapp.backend.objects.UserFavorites
 
 object Utility {
 
@@ -109,17 +110,12 @@ object Utility {
         if (username == "" || password == "" || email == "" || firstname == "" || lastname == "") {
             return false
         }
-
-
         //register user
         database.registerUser(username, Cypher.encryptPassword(password, username), email, firstname, lastname)
-
-
-
-
         return true
     }
 
+    val userFavoritesSet = mutableSetOf<UserFavorites>()
 
     val studioSet = mutableSetOf<FitnessStudio>()
 
@@ -144,6 +140,24 @@ object Utility {
         studioSet.addAll(database.getAllFitnessStudios())
         trainingsmapSet.addAll(database.getAllTrainingsMaps())
         muscleGroupSet.addAll(database.getAllMuscleGroups())
+        database.loadAllUserFavorites()
+    }
+
+    fun addUserFavorites(user: User, fitnessActivity: Trainingsmap) {
+        val userFavorites = userFavoritesSet.find { it.userID == user.id }!!
+        userFavorites.trainingsmapIDList.add(fitnessActivity.id)
+        updateUserFavorites(user)
+    }
+
+    fun removeUserFavorite(user: User, fitnessActivity: Trainingsmap) {
+        val userFavorites = userFavoritesSet.find { it.userID == user.id }!!
+        userFavorites.trainingsmapIDList.remove(fitnessActivity.id)
+        updateUserFavorites(user)
+    }
+
+    private fun updateUserFavorites(user: User) {
+        val userFavorites = userFavoritesSet.find { it.userID == user.id }!!
+        database.updateUserFavorites(userFavorites)
     }
 
     fun createActivityTask(name: String, mscGroup: String, std: String, description: String): Boolean {
