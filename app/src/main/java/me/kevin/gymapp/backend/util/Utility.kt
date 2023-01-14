@@ -44,6 +44,8 @@ object Utility {
 
         currentUser = userSet.find { it.username == username }!!
 
+        if (userFavoritesSet.find { it.userID == currentUser!!.id } == null)
+            userFavoritesSet.add(UserFavorites(currentUser!!.id, mutableSetOf()))
         return true
     }
 

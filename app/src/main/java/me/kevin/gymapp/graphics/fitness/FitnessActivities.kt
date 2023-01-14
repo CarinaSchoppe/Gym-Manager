@@ -75,16 +75,16 @@ class FitnessActivities : ComponentActivity() {
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
+                Checkbox(checked = userFavoritesChecked.value, onCheckedChange = { userFavoritesChecked.value = it })
                 //create a button for each fitness activity
                 Button(onClick = { startActivity(Intent(this@FitnessActivities, CreateFitnessStudioActivity::class.java)) }) { Text(text = "Add Studio") }
                 Button(onClick = { startActivity(Intent(this@FitnessActivities, CreateMuscleGroupActivity::class.java)) }) { Text(text = "Add Musclegroup") }
                 Button(onClick = { startActivity(Intent(this@FitnessActivities, CreateFitnessActivity::class.java)) }) { Text(text = "Add Fitnessplan") }
                 //add a checkbox with the name "Favorites" to the row that changes the userFavoritesChecked value
-                Checkbox(checked = userFavoritesChecked.value, onCheckedChange = { userFavoritesChecked.value = it })
 
             }
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                for (activity in Utility.trainingsmapSet.filter { userFavoritesChecked.value == false || Utility.userFavoritesSet.find { it.userID == Utility.currentUser!!.id }!!.trainingsmapIDList.contains(it.id) }) {
+                for (activity in Utility.trainingsmapSet.filter { !userFavoritesChecked.value || Utility.userFavoritesSet.find { it.userID == Utility.currentUser!!.id }!!.trainingsmapIDList.contains(it.id) }) {
                     Button(onClick = {
                         Utility.selectedFitnessActivity = activity
                         startActivity(Intent(this@FitnessActivities, FitnessActivity::class.java))
