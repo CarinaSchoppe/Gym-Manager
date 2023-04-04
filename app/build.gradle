@@ -4,13 +4,13 @@ plugins {
 }
 
 android {
-    namespace 'me.kevin.GymApp'
+    namespace 'me.carina.GymApp'
     compileSdk 33
 
     defaultConfig {
-        applicationId "me.kevin.GymApp"
+        applicationId "me.carina.GymApp"
         minSdk 31
-        targetSdk 31
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 

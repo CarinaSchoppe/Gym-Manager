@@ -20,42 +20,42 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GymApp">
         <activity
-            android:name="me.kevin.gymapp.graphics.fitness.FitnessActivity"
+            android:name="me.carina.gymapp.graphics.fitness.FitnessActivity"
             android:exported="false"
             android:label="@string/title_activity_fitness"
             android:theme="@style/Theme.GymApp" />
         <activity
-            android:name="me.kevin.gymapp.graphics.fitness.CreateFitnessActivity"
+            android:name="me.carina.gymapp.graphics.fitness.CreateFitnessActivity"
             android:exported="false"
             android:label="@string/title_activity_create_fitness"
             android:theme="@style/Theme.GymApp" />
         <activity
-            android:name="me.kevin.gymapp.graphics.musclegroup.CreateMuscleGroupActivity"
+            android:name="me.carina.gymapp.graphics.musclegroup.CreateMuscleGroupActivity"
             android:exported="false"
             android:label="@string/title_activity_create_muscle_group"
             android:theme="@style/Theme.GymApp" />
         <activity
-            android:name="me.kevin.gymapp.graphics.studio.CreateFitnessStudioActivity"
+            android:name="me.carina.gymapp.graphics.studio.CreateFitnessStudioActivity"
             android:exported="false"
             android:label="@string/title_activity_create_fitnessstudio"
             android:theme="@style/Theme.GymApp" />
         <activity
-            android:name="me.kevin.gymapp.graphics.fitness.FitnessActivities"
+            android:name="me.carina.gymapp.graphics.fitness.FitnessActivities"
             android:exported="false"
             android:label="@string/title_activity_fitness_activities"
             android:theme="@style/Theme.GymApp" />
         <activity
-            android:name="me.kevin.gymapp.graphics.studio.FitnessStudioActivity"
+            android:name="me.carina.gymapp.graphics.studio.FitnessStudioActivity"
             android:exported="false"
             android:label="@string/title_activity_fitness_studio"
             android:theme="@style/Theme.GymApp" />
         <activity
-            android:name="me.kevin.gymapp.graphics.login.RegisterActivity"
+            android:name="me.carina.gymapp.graphics.login.RegisterActivity"
             android:exported="false"
             android:label="@string/title_activity_register"
             android:theme="@style/Theme.GymApp" />
         <activity
-            android:name="me.kevin.gymapp.graphics.login.LoginActivity"
+            android:name="me.carina.gymapp.graphics.login.LoginActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.GymApp">
